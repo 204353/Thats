@@ -42,7 +42,7 @@ def caeser():
     s = int(entry_b.get())
     newword = ''
     for i in range(0, len(text)):
-        if text.isupper():
+        if text[i].isupper():
             ch = text[i].lower()
             x = binarysearch(alphabet, ch)
             x += s
