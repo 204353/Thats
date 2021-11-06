@@ -60,19 +60,18 @@ def validation():
     text = entry_a.get()
     s = entry_b.get()
     if len(text) == 0:
-        msg = "You need to input a word"
+        msg = "You need to input a word!"
     else:
         if any(ch.isdigit() for ch in text):
-            msg = "Your Word can't have numbers"
+            msg = "Your Word can't have numbers!"
         else:
             if len(s) == 0:
-                msg = "You need to input a shift"
-            for i in s:
-                if i.isdecimal() == False:
-                    msg = "Your shift must be a number!"
-                else:
-                    x = 1
-                    caeser()
+                msg = "You need to input a shift!"
+            if any(i.isdigit() == False for i in s):
+                msg = "Your shift must be an integer!"
+            else:
+                x = 1
+                caeser()
     if x == 0:
         label = tk.Label(text=msg, fg="#aa00ff")
         label.pack()
