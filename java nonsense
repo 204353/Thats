@@ -1,0 +1,38 @@
+import java.util.Scanner;
+public class testing {
+    public static void main(String[] args){
+        System.out.println("You have to enter 2 integers followed by 3 letters followed by 1 integer ");
+        String x = totalvalidation();
+    }
+    static String totalvalidation(){
+        while(true){
+            System.out.println("Enter your values");
+            Scanner sc = new Scanner(System.in);
+            String input = sc.next();
+            System.out.println(input.length());
+            if (input.length()!= 6){
+                System.out.println("Invalid");
+                continue;
+            }
+            String twoint = input.substring(0, 2);
+            String threechar = input.substring(2, 5);
+            String lastint = input.substring(5, 6);
+            boolean y = intvalidation(twoint);
+            System.out.println(y);
+            }
+        }
+    
+    static boolean intvalidation(String x){
+        int j = 0;
+        for (int i = 0; i < x.length(); i++){
+            if (x.charAt(i) >= "0"  && x.charAt(i) <= "9"){
+                j += 1;
+            }
+            if (j==2){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+}
