@@ -3,6 +3,7 @@ public class testing {
     public static void main(String[] args){
         System.out.println("You have to enter 2 integers followed by 3 letters followed by 1 integer ");
         String x = totalvalidation();
+        System.out.println("Your code is " + x);
     }
     static String totalvalidation(){
         while(true){
@@ -11,28 +12,49 @@ public class testing {
             String input = sc.next();
             System.out.println(input.length());
             if (input.length()!= 6){
-                System.out.println("Invalid");
+                System.out.println("Your code can only be 6 letters.");
                 continue;
             }
             String twoint = input.substring(0, 2);
             String threechar = input.substring(2, 5);
             String lastint = input.substring(5, 6);
             boolean y = intvalidation(twoint);
-            System.out.println(y);
+            if (!y){
+                System.out.println("The first 2 characters should be integers.");
+                continue;
             }
+            boolean x = stringvalidation(threechar);
+            if (!x){
+                System.out.println("The 3rd, 4th and 5th characters should be letters.");
+                continue;
+            }
+            boolean z = intvalidation(lastint);
+            if (!z){
+                System.out.println("The last character should be an integer.");
+                continue;
+            }
+            sc.close();
+            return input;
         }
+    }
     
-    static boolean intvalidation(String x){
-        int j = 0;
-        for (int i = 0; i < x.length(); i++){
-            if (x.charAt(i) >= "0"  && x.charAt(i) <= "9"){
-                j += 1;
-            }
-            if (j==2){
-                return true;
-            }else{
+    static boolean intvalidation(String twoint){
+        try {
+            double d = Double.parseDouble(twoint);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+    static boolean stringvalidation(String name) {
+        char[] chars = name.toCharArray();
+    
+        for (char c : chars) {
+            if(!Character.isLetter(c)) {
                 return false;
             }
         }
+    
+        return true;
     }
 }
