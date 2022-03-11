@@ -1,0 +1,45 @@
+import os, time
+class Word:
+    #WordName : STRING
+    #WordDefinition : STRING
+    #SpeechPart : STRING
+    def __init__(self, WordName, WordDefinition, SpeechPart):
+        self.__WordName = WordName
+        self.__WordDefinition = WordDefinition
+        self.__SpeechPart = SpeechPart
+    def getWordName(self):
+        return self.__WordName
+    def getWordDefinition(self):
+        return self.__WordDefinition
+starttime = time.time()
+array = []
+def ReadData():
+    try:
+        with open("mydict.txt", "r") as f:
+            x = f.readlines()
+            for i in range(0, len(x), 3):
+                array.append(Word(x[i].rstrip(), x[i+1].rstrip(), x[i+2].rstrip()))
+            return len(array)
+    except OSError:
+        print(f"Your file was not found. It is located in the {os.getcwd()} directory.")
+
+print(ReadData())
+endtime1 = time.time()
+mydict = {}
+with open("mydict.txt", "r") as r:
+    y = r.readlines()
+    for i in range(0, len(y), 3):
+        obj = Word(y[i].rstrip(), y[i+1].rstrip(), y[i+2].rstrip())
+        mydict[obj.getWordName] = obj
+endtime2 = time.time()
+print(endtime1 - starttime, endtime2 - endtime1)
+def insertionsort(mydict, key):
+    for i in range(1, len(mydict)):
+        x = mydict[i][key]
+        j = i-1
+        while j > 0 and mydict[i][key] < mydict[j][key]:
+            mydict[j+1] = mydict[j]
+            j -= 1
+        mydict[j+1] = x
+    return mydict
+print(insertionsort(mydict, key = lambda word:word.lower()))
