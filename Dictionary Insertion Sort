@@ -1,4 +1,4 @@
-import os, time
+import os, time, pickle
 class Word:
     #WordName : STRING
     #WordDefinition : STRING
@@ -101,4 +101,10 @@ def finddef(array):
             else:
                 print("Not long enough")
             break
-finddef(array)
+def l(mydict):
+    with open("x.pkl", "wb") as handle:
+        pickle.dump(mydict, handle)
+    with open("x.pkl", "rb") as handle:
+        b = pickle.load(handle)
+    return mydict==b
+print(l(mydict))
