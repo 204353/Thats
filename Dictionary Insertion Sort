@@ -11,6 +11,13 @@ class Word:
         return self.__WordName
     def getWordDefinition(self):
         return self.__WordDefinition
+    def getSpeechPart(self):
+        return self.__SpeechPart
+    def setDescription(self, description):
+        if len(description) >= 30:
+            self.__WordDefinition = description
+        else:
+            print("Must be at least 30 characters.")
 starttime = time.time()
 array = []
 def ReadData():
@@ -33,13 +40,65 @@ with open("mydict.txt", "r") as r:
         mydict[obj.getWordName] = obj
 endtime2 = time.time()
 print(endtime1 - starttime, endtime2 - endtime1)
-def insertionsort(mydict, key):
-    for i in range(1, len(mydict)):
-        x = mydict[i][key]
-        j = i-1
-        while j > 0 and mydict[i][key] < mydict[j][key]:
-            mydict[j+1] = mydict[j]
+def insertionsort(array):
+    for i in range(1, len(array)):
+        x = array[i]
+        j = i - 1
+        while j >= 0 and array[j].getWordName().lower() > x.getWordName().lower():
+            array[j+1] = array[j]
             j -= 1
-        mydict[j+1] = x
+        array[j+1] = x
+    return array
+def dictsort(mydict):
+    mydict.clear()
+    for i in array:
+        mydict[i.getWordName()] = i
     return mydict
-print(insertionsort(mydict, key = lambda word:word.lower()))
+def binarysearch(target):
+    left = 0
+    right = len(array)
+    while left < right:
+        mid = int((left+right)/2)
+        if array[mid].getWordName() == target:
+            return mid
+        elif array[mid].getWordName() > target:
+            right = mid - 1
+        else:
+            left = mid + 1
+    return -1
+def linearsearch(target):
+    for i in range(0, len(array)):
+        if array[i].getWordName() == target:
+            return i
+    return -1
+def display():
+    while True:
+        try:
+            search = input("What word do you want to search for?")
+            n = linearsearch(search)
+            if n == -1:
+                print("That word is not in this dictionary.")
+            else:
+                print(f"Definition : {array[n].getWordDefinition()}\nSpeech Part:{array[n].getSpeechPart()}")
+                break
+        except ValueError:
+            print("Invalid word")
+spellcheckarray = []
+for i in array:
+    if ' ' not in i.getWordName():
+        spellcheckarray.append(i)
+with open ("spellcheckdict.txt", "a") as f:
+    for i in spellcheckarray:
+        line = i.getWordName() + '\n'
+        f.write(line)
+def finddef(array):
+    for i in range(0, len(array)):
+        if len(array[i].getWordDefinition()) < 30:
+            print(array[i].getWordName())
+            description = input("Enter the definition for the above word:")
+            if len(description) > 29:
+                array[i].setDescription(description)
+            else:
+                print("Not long enough")
+            break
+finddef(array)
